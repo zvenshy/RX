@@ -1,4 +1,4 @@
-js
+RX
 ==
 
-study js 
+Rixin javascript Library
