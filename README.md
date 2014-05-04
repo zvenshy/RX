@@ -1,7 +1,5 @@
-/*
- * Rixin JavaScript Library
- * Copyright 2014 Venshy
- */
+Rixin JavaScript Library
+Copyright 2014 Venshy
 
 Clone到本地，在页面中载入即可使用。
 格式：
