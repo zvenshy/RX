@@ -2,7 +2,8 @@
  * Rixin JavaScript Library
  * Copyright 2014 Venshy
  */
- Clone到本地，在页面中载入即可使用。
+
+Clone到本地，在页面中载入即可使用。
 格式：
 RX([module1, module2, ...,]function ($) {});
 
@@ -14,7 +15,4 @@ RX(['animate', 'core'], function ($) {})//数组形式亦可
 现有模块 core,css,anamite
 具体使用看代码。
 其中anamite(object, {props} [,duration, easing])
-props以JSON格式传入，目前只对最后一个有作用。。RX
-==
-
-Rixin javascript Library
+props以JSON格式传入，目前只对最后一个有作用。。
