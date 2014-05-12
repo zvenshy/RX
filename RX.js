@@ -1,7 +1,7 @@
 /*
  * Rixin JavaScript Library
  * Copyright 2014 Venshy
- * Date: 2014-5-12
+ * Date: 2014-5-3
  */
 function  RX () {
     var args     = RX.fn.toArray(arguments)
@@ -215,7 +215,11 @@ RX.modules.animate = function (rx) {
             end[i]       = begin[i] + change[i];
         }
         //默认缓动方式
-        if (!easings[easing]) {
+        if (typeof easing === 'function') {
+            easings['extend'] = easing;
+            easing = 'extend';
+        }
+        if ( !easing || !(easing in easings) ) {
             easing = 'swing';
         }
 
