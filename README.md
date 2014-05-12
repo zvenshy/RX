@@ -14,4 +14,4 @@ RX(['animate', 'core'], function ($) {})//数组形式亦可<br/>
 现有模块 core,css,anamite<br/>
 具体使用看代码。<br/>
 其中anamite(object, {props} [,duration, easing])<br/>
-props以JSON格式传入，目前只对最后一个有作用。。<br/>
+props以JSON格式传入，目前只对单位为px的属性有作用。。<br/>
