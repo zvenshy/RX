@@ -1,7 +1,7 @@
 /*
  * Rixin JavaScript Library
  * Copyright 2014 Venshy
- * Date: 2014-5-3
+ * Date: 2014-5-12
  */
 function  RX () {
     var args     = RX.fn.toArray(arguments)
@@ -162,13 +162,13 @@ RX.modules.animate = function (rx) {
         ,   everytime    = 1000 / 30
         ,   duration     = duration || 2000
         ,   easings = {
-            linear : function linear(pre) {
+            linear : function ( pre ) {
                 return pre;
             },
-            swing  : function swing(pre) {
+            swing  : function ( pre ) {
                 return 0.5 - Math.cos ( pre*Math.PI ) / 2;
             },
-            bounce : function bounce(pre) {
+            easeInOutBounce : function ( pre ) {
                 if ( pre < (1 / 2.75) ) {
                     return 7.5625 * pre * pre;
                 } else if ( pre < (2 / 2.75) ) {
@@ -178,35 +178,61 @@ RX.modules.animate = function (rx) {
                 } else {
                     return 7.5625 * ( pre -= (2.625 / 2.75) ) * pre + .984375;
                 }
+            },
+            sine: function ( pre ) {
+                    return 1 - Math.cos( pre * Math.PI / 2 );
+            },
+            circ: function ( pre ) {
+                    return 1 - Math.sqrt( 1 - pre * pre );
+            },
+            elastic: function( pre ) {
+                    return pre === 0 || pre === 1 ? pre :
+                            -Math.pow( 2, 8 * (pre - 1) ) * Math.sin( ( (pre - 1) * 80 - 7.5 ) * Math.PI / 15 );
+            },
+            back: function( pre ) {
+                    return pre * pre * ( 3 * pre - 2 );
+            },
+            easeInBounce: function ( pre ) {
+                    var pow2,
+                            bounce = 4;
+
+                    while ( pre < ( ( pow2 = Math.pow( 2, --bounce ) ) - 1 ) / 11 ) {}
+                    return 1 / Math.pow( 4, 3 - bounce ) - 7.5625 * Math.pow( ( pow2 * 3 - 2 ) / 22 - pre, 2 );
             }
+
         };
         //参数载入
         var scroll = obj
-        ,   begin
-        ,   change
-        ,   end
-        ,   changeSty
+        ,   changeSty = []
+        ,   begin     = {}
+        ,   change    = {}
+        ,   end       = {}
         ,   i;
         for ( i in props) {
-            begin     = parseFloat( compStyle(obj, i) );
-            changeSty = i;
-            change    = parseFloat( props[i] ) - begin;
-            end       = begin + change;
+            changeSty.push(i);
+            begin[i]     = parseFloat( compStyle(obj, i) );
+            change[i]    = parseFloat( props[i] ) - begin[i];
+            end[i]       = begin[i] + change[i];
         }
         //默认缓动方式
         if (!easings[easing]) {
-            easing = 'linear';
+            easing = 'swing';
         }
 
         var begintime = new Date;
         var ani = setInterval (function () {
-            var pre = (new Date - begintime) / duration;
+            var pre = (new Date - begintime) / duration
+            ,   l   = changeSty.length
+            ,   i = 0;
             if (pre >= 1) {
                 scroll.style[changeSty] = end + 'px';
                 clearInterval(ani);
                 return;
             }
-           scroll.style[changeSty] = begin + easings[easing](pre)*change + 'px';
+            for (;i < l; i++) {
+                scroll.style[ changeSty[i] ] = begin[ changeSty[i] ] +
+                    easings[easing](pre)*change[ changeSty[i] ] + 'px';
+            }
         }, everytime);  
     }
 
