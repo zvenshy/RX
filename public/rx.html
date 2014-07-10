@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>rx js library</title>
+	<style type='text/css' >
+		* {margin: 0; padding: 0;}
+		#scrollBox {position: relative; width: 400px; height: 300px; overflow: hidden;}
+		#scroll {position: absolute; left: 0; top: 0; width: 400px; overflow: hidden}
+		#scroll li {list-style: none; float: left;}
+		#scroll li, #scroll li img {width: 400px; height: 300px; border: none;}
+	</style>
+</head>
+<body>
+	<div id="scrollBox">
+		<div id="scroll">
+			<ul>
+				<li><img src="pic.jpg" alt="" /></li>
+				<li><img src="pic.jpg" alt="" /></li>
+				<li><img src="pic.jpg" alt="" /></li>
+			</ul>
+		</div>
+	</div>
+    <div style="margin-left: 300px"><button id="show">show</button><button id="hide">hide</button><button id="togl">togl</button></div>
+    <div id="toggle">toggle</div>
+	<script type='text/javascript' src='javascripts/RX.js'></script>
+	<script type="text/javascript">
+	window.onload = function () {
+        RX('animate', function ($) {
+            var count = 1
+            ,   easing = ''
+            ,   everyAniTime = 900    //ms
+            ,   everytime    = 1500   //ms
+            var scroll = document.getElementById('scroll');
+            var ani = setInterval(function(){
+                if(count > 2) {
+                    $.animate (scroll, {'top' : 0, 'left' : 0}, everyAniTime, 'swing');
+                    count = 1;
+                    return;
+                }
+                $.animate (scroll, {'top' : -300*count++ + 'px','left' : -10*count + 'px'},
+                    everyAniTime, function( pre ) {
+                    return pre * pre * ( 3 * pre - 2 );
+            });
+            }, everytime);
+            var show = document.getElementById('show')
+            ,   hide = document.getElementById('hide')
+            ,   togg = document.getElementById('togl')
+            ,   toggle = document.getElementById('toggle');
+            show.onclick = function () {
+                $.show(toggle);
+            };
+            hide.onclick = function () {
+                $.hide(toggle);
+            };
+            togg.onclick = function () {
+                $.togl(toggle)
+            };
+        });
+        RX( 'core', 'animate', 'ajax', function ($) {
+            console.log( $.inArray([ 1, 2, 3, 4, 5 ], 3) );
+            console.log( $.isArray([ 1, 2, 3 ]) );
+            console.log( $.isArray({}) );
+            console.log( $.isArray([]) );
+            a = [ 1, 2, 3, 4, 5 ];
+            $.each( a, function (i, value) {
+                ++ a[i];
+            });
+            $.each( a, function (i) {
+                console.log(a[i]);
+            });
+            b = {'a':'a1','b':'b1','a1':'a1','b1':'b1'}
+            $.each( b, function (i, v) {
+                console.log('%s, %s',i,v);
+                b[i] = 'change' + i;
+            })
+            $.each( b, function (i) {
+                console.log(b[i])
+            })
+            console.log( RX.fn.toArray(arguments) )
+            console.log(Array.prototype.slice.call( arguments ) )
+            document.getElementById('scroll').onclick = function () {
+                $.ajax({
+                    'method'      : 'POST',
+                    'data'        : JSON.stringify({"data":"okk"}),
+                    'url'         : '/ajax',
+                    'contentType' : 'application/json',
+                    'success'     : function (data) {
+                        console.log(data);
+                    }
+                });
+            }
+        });
+        RX('sizzle', 'css', function ($) {
+            console.log( $.compStyle($.find('#scroll')[0], 'left') );
+        })
+	}
+	</script>
+</body>
+</html>
