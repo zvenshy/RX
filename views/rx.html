@@ -15,7 +15,7 @@
 	<div id="scrollBox">
 		<div id="scroll">
 			<ul>
-				<li><img src="pic.jpg" alt="" /></li>
+				<li><img src="https://avatars1.githubusercontent.com/u/5699682?s=460" alt="" /></li>
 				<li><img src="pic.jpg" alt="" /></li>
 				<li><img src="pic.jpg" alt="" /></li>
 			</ul>
@@ -25,7 +25,9 @@
     <div id="toggle">toggle</div>
 	<script type='text/javascript' src='javascripts/RX.js'></script>
 	<script type="text/javascript">
-	window.onload = function () {
+	
+    var load = function load() {
+
         RX('animate', function ($) {
             var count = 1
             ,   easing = ''
@@ -94,7 +96,17 @@
         RX('sizzle', 'css', function ($) {
             console.log( $.compStyle($.find('#scroll')[0], 'left') );
         })
-	}
+        
+        RX('browser', 'core', function ($) {
+            $.each( $.browser(), function (key, value) {
+                if ( value ) {
+                    alert(key + value);
+                }
+            } )
+        });
+	};
+    HTMLElement.prototype.addEventListener.apply(window.document, ['DOMContentLoaded', load, false]);
+    //window.document.addEventListener(‘DOMContentLoaded’, DOMContentLoaded, false);
 	</script>
 </body>
 </html>

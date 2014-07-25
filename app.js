@@ -29,7 +29,7 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', function (req, res) {
-    res.sendfile('public/rx.html');
+    res.sendfile('views/rx.html');
 });
 app.get('/ajax', function (req, res) {
     console.log('getok');
