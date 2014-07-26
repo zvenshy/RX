@@ -31,6 +31,12 @@ if ('development' == app.get('env')) {
 app.get('/', function (req, res) {
     res.sendfile('views/rx.html');
 });
+app.get('/test', function (req, res) {
+    res.sendfile('views/index.html');
+});
+app.get('/test/m', function (req, res) {
+    res.sendfile('views/rx.html');
+});
 app.get('/ajax', function (req, res) {
     console.log('getok');
     res.send({'status' : 'ok'});

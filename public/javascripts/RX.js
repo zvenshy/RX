@@ -394,7 +394,6 @@ RX.modules.browser = function (rx) {
                 isIphone: /iPhone/i.test( navigator.userAgent ),
                 isIpad: /iPad/i.test( navigator.userAgent ),
                 isAndroid: /android/i.test( navigator.userAgent ),
-                isPhone: isIphone || isAndroid;
             }
     }
     rx.browser = browser;
